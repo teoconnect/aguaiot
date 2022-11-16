@@ -1,3 +1,6 @@
+# Version fixed for my Klover model
+
+
 # py-agua-iot
 
 py-agua-iot provides controlling heating devices connected via the IOT Agua platform of Micronova.
