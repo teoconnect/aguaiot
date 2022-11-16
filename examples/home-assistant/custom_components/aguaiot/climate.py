@@ -1,4 +1,4 @@
-"""Support for Agua IOT heating devices. - Removed klover not compatible items"""
+"""Support for Agua IOT heating devices. -- Removed klover not compatible items"""
 import logging
 
 from py_agua_iot import (  # pylint: disable=redefined-builtin
