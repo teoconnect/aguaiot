@@ -1,4 +1,4 @@
-"""Support for Agua IOT heating devices."""
+"""Support for Agua IOT heating devices. - Removed klover not compatible items"""
 import logging
 
 from py_agua_iot import (  # pylint: disable=redefined-builtin
@@ -39,6 +39,7 @@ from .const import (
     CONF_UUID,
     DOMAIN,
     AGUA_STATUS_CLEANING,
+    AGUA_STATUS_CLEANING_FINAL,
     AGUA_STATUS_FLAME,
     AGUA_STATUS_OFF,
     AGUA_STATUS_ON,
@@ -49,6 +50,7 @@ _LOGGER = logging.getLogger(__name__)
 CURRENT_HVAC_MAP_AGUA_HEAT = {
     AGUA_STATUS_ON: CURRENT_HVAC_HEAT,
     AGUA_STATUS_CLEANING: CURRENT_HVAC_HEAT,
+    AGUA_STATUS_CLEANING_FINAL: CURRENT_HVAC_OFF,
     AGUA_STATUS_FLAME: CURRENT_HVAC_HEAT,
     AGUA_STATUS_OFF: CURRENT_HVAC_OFF,
 }
@@ -101,13 +103,13 @@ class AguaIOTHeatingDevice(ClimateEntity):
         return SUPPORT_TARGET_TEMPERATURE | SUPPORT_FAN_MODE
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the device specific state attributes."""
         return {
             ATTR_DEVICE_ALARM: self._device.alarms,
             ATTR_DEVICE_STATUS: self._device.status,
             ATTR_HUMAN_DEVICE_STATUS: self._device.status_translated,
-            ATTR_SMOKE_TEMP: self._device.gas_temperature,
+#            ATTR_SMOKE_TEMP: self._device.gas_temperature,
             ATTR_REAL_POWER: self._device.real_power,
         }
 
@@ -146,30 +148,30 @@ class AguaIOTHeatingDevice(ClimateEntity):
         """Return the unit of measurement."""
         return TEMP_CELSIUS
 
-    @property
-    def min_temp(self):
-        """Return the minimum temperature to set."""
-        return self._device.min_temp
+#    @property
+#    def min_temp(self):
+#        """Return the minimum temperature to set."""
+#        return self._device.min_temp
 
-    @property
-    def max_temp(self):
-        """Return the maximum temperature to set."""
-        return self._device.max_temp
+#    @property
+#    def max_temp(self):
+#        """Return the maximum temperature to set."""
+#        return self._device.max_temp
 
-    @property
-    def current_temperature(self):
-        """Return the current temperature."""
-        return self._device.air_temperature
+#    @property
+#    def current_temperature(self):
+#        """Return the current temperature."""
+#        return self._device.air_temperature
 
-    @property
-    def target_temperature(self):
-        """Return the temperature we try to reach."""
-        return self._device.set_air_temperature
+#    @property
+#    def target_temperature(self):
+#        """Return the temperature we try to reach."""
+#        return self._device.set_air_temperature
 
     @property
     def hvac_mode(self):
         """Return hvac operation ie. heat, cool mode."""
-        if self._device.status != 0:
+        if self._device.status not in [0, 6]:
             return HVAC_MODE_HEAT
         return HVAC_MODE_OFF
 
