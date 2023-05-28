@@ -11,7 +11,7 @@ setuptools.setup(
     description="py-agua-iot provides controlling heating devices connected via the IOT Agua platform of Micronova",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/fredericvl/py-agua-iot",
+    url="https://github.com/teoconnect/py-agua-iot",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
